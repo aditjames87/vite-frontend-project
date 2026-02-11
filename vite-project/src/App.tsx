@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Input } from "/workspaces/vite-frontend-project/vite-project/src/components/ui/input.tsx";
 import { Button } from "/workspaces/vite-frontend-project/vite-project/src/components/ui/button.tsx";
 import {
@@ -13,8 +14,49 @@ import {
   Heart,
   Settings,
 } from "lucide-react";
-import { useState } from "react";
 
+// LoginPage component
+const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email && password) {
+      onLogin(); // simulate successful login
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-md rounded-lg p-6 w-96 space-y-4"
+      >
+        <h2 className="text-2xl font-bold text-center text-blue-600">Login to the page</h2>
+        <Input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full border rounded px-3 py-2"
+        />
+        <Input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full border rounded px-3 py-2"
+        />
+        <Button type="submit" className="w-full bg-blue-600 text-white rounded">
+          Log In
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+// FacebookLayout component
 const FacebookLayout = () => {
   const [showMore, setShowMore] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
@@ -58,7 +100,7 @@ const FacebookLayout = () => {
 
       {/* Main Content */}
       <main className="pt-14 flex">
-        {/* Sidebar (25%) */}
+        {/* Sidebar */}
         <aside className="w-1/4 bg-white shadow-md h-screen p-4 hidden md:block overflow-y-auto">
           <ul className="space-y-4 text-gray-700">
             <li className="flex items-center gap-2 cursor-pointer hover:text-blue-600">
@@ -104,7 +146,7 @@ const FacebookLayout = () => {
           </ul>
         </aside>
 
-        {/* Feed (50%) */}
+        {/* Feed */}
         <section className="w-1/2 p-6 space-y-6">
           {/* What's on your mind box */}
           <div className="bg-white shadow rounded-lg p-4">
@@ -152,46 +194,66 @@ const FacebookLayout = () => {
           </div>
         </section>
 
-        {/* Right column (25%) reserved for ads */}
+        {/* Right column */}
         <aside className="w-1/4 p-4 hidden md:block">
           <div className="bg-white shadow rounded-lg p-4 mb-6">
             <h2 className="font-semibold mb-3">Sponsored</h2>
             <img src="https://via.placeholder.com/250x150" alt="Ad" className="rounded-lg mb-2" />
-            <p className="text-sm text-gray-600">Ad content goes here...</p>
+            <p className="text-sm text-gray-600">Ad description goes here.</p>
           </div>
-
-          {/* Chat window only appears when toggled */}
-          {chatOpen && (
-            <div className="bg-white shadow rounded-lg p-4 h-96 flex flex-col">
-              <h2 className="font-semibold mb-3">Chats</h2>
-              <div className="flex-1 overflow-y-auto space-y-3">
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <img src="https://via.placeholder.com/32" alt="Friend" className="h-8 w-8 rounded-full" />
-                  <span>Jane Smith</span>
-                </div>
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                  <img src="https://via.placeholder.com/32" alt="Friend" className="h-8 w-8 rounded-full" />
-                  <span>Michael Brown</span>
-                </div>
-              </div>
-            </div>
-          )}
+          <div className="bg-white shadow rounded-lg p-4">
+            <h2 className="font-semibold mb-3">Contacts</h2>
+            <ul className="space-y-3">
+              <li className="flex items-center gap-3 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                <img
+                  src="https://via.placeholder.com/32"
+                  alt="Contact Avatar"
+                  className="h-8 w-8 rounded-full"
+                />
+                <span>Jane Smith</span>
+              </li>
+              <li className="flex items-center gap-3 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                <img
+                  src="https://via.placeholder.com/32"
+                  alt="Contact Avatar"
+                  className="h-8 w-8 rounded-full"
+                />
+                <span>Bob Johnson</span>
+              </li>
+              {/* More contacts... */}
+            </ul>
+          </div>
         </aside>
       </main>
 
-      {/* Floating Chat button toggles chatOpen */}
-      <div className="fixed bottom-6 right-6 z-[60]">
-        <Button
-          size="icon"
-          onClick={() => setChatOpen(!chatOpen)}
-          className="h-14 w-14
-          <bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-500 focus:ring-2 focus:ring-blue-300"
-        >
-          💬 
-        </Button>
-      </div>
+      {/* Chat Window */}
+      {chatOpen && (
+        <div className="fixed bottom-0 right-0 m-4 w-80 bg-white shadow-lg rounded-t-lg">
+          <div className="flex items-center justify-between bg-gray-200 p-3 rounded-t-lg">
+            <span className="font-semibold">Chat with Jane</span>
+            <button onClick={() => setChatOpen(false)} className="text-gray-600 hover:text-gray-800">
+              ✕
+            </button>
+          </div>
+          <div className="p-3 h-64 overflow-y-auto">
+            {/* Chat messages would go here */}
+            <p className="text-sm text-gray-600">Jane: Hi there!</p>
+            <p className="text-sm text-gray-600">You: Hello!</p>
+          </div>
+          <div className="p-3 border-t">
+            <Input placeholder="Type a message..." className="w-full border rounded-full px-4 py-2" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default FacebookLayout;
+// Main App component
+const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  return loggedIn ? <FacebookLayout /> : <LoginPage onLogin={() => setLoggedIn(true)} />;
+};
+
+export default App;   
