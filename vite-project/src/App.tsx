@@ -15,7 +15,7 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
     }
   };
 
-  return (
+    return (
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-[#f0f2f5] pt-10 pb-28 px-4 relative">
       {/* Left Side: Branding */}
       <div className="lg:w-[500px] lg:pr-8 mb-8 lg:mb-0 text-center lg:text-left">
