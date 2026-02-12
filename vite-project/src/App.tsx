@@ -5,7 +5,6 @@ import { Button } from "/workspaces/vite-frontend-project/vite-project/src/compo
 interface LoginPageProps {
   onLogin: () => void;
 }
-
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
