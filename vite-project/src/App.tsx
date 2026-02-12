@@ -33,7 +33,7 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg p-6 w-96 space-y-4"
       >
-        <h2 className="text-2xl font-bold text-center text-blue-600">Login to the page</h2>
+        <h2 className="text-2xl font-bold text-center text-blue-600">Login Form</h2>
         <Input
           type="email"
           placeholder="Email"
@@ -198,7 +198,7 @@ const FacebookLayout = () => {
         <aside className="w-1/4 p-4 hidden md:block">
           <div className="bg-white shadow rounded-lg p-4 mb-6">
             <h2 className="font-semibold mb-3">Sponsored</h2>
-            <img src="https://via.placeholder.com/250x150" alt="Ad" className="rounded-lg mb-2" />
+            <img src="https://via.placeholder.com/250x150" alt="Ad" className="rounded-lg mb-2"></img>
             <p className="text-sm text-gray-600">Ad description goes here.</p>
           </div>
           <div className="bg-white shadow rounded-lg p-4">
@@ -218,7 +218,7 @@ const FacebookLayout = () => {
                   alt="Contact Avatar"
                   className="h-8 w-8 rounded-full"
                 />
-                <span>Bob Johnson</span>
+                <span>Mike Johnson</span>
               </li>
               {/* More contacts... */}
             </ul>
@@ -228,23 +228,28 @@ const FacebookLayout = () => {
 
       {/* Chat Window */}
       {chatOpen && (
-        <div className="fixed bottom-0 right-0 m-4 w-80 bg-white shadow-lg rounded-t-lg">
-          <div className="flex items-center justify-between bg-gray-200 p-3 rounded-t-lg">
+        <div className="fixed bottom-0 right-0 m-4 w-80 bg-white shadow-lg rounded-lg">
+          <div className="flex items-center justify-between p-3 border-b">
             <span className="font-semibold">Chat with Jane</span>
-            <button onClick={() => setChatOpen(false)} className="text-gray-600 hover:text-gray-800">
-              ✕
-            </button>
+            <button onClick={() => setChatOpen(false)} className="text-gray-500 hover:text-gray-700">✕</button>
           </div>
           <div className="p-3 h-64 overflow-y-auto">
             {/* Chat messages would go here */}
-            <p className="text-sm text-gray-600">Jane: Hi there!</p>
-            <p className="text-sm text-gray-600">You: Hello!</p>
+            <p className="text-sm text-gray-600">Jane: Hey! How are you?</p>
           </div>
           <div className="p-3 border-t">
             <Input placeholder="Type a message..." className="w-full border rounded-full px-4 py-2" />
           </div>
         </div>
       )}
+
+      {/* Chat toggle button */}
+      <button
+        onClick={() => setChatOpen(true)}
+        className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700"
+      >
+        💬
+      </button>
     </div>
   );
 };
@@ -253,7 +258,11 @@ const FacebookLayout = () => {
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  return loggedIn ? <FacebookLayout /> : <LoginPage onLogin={() => setLoggedIn(true)} />;
+  return (
+    <div>
+      {loggedIn ? <FacebookLayout /> : <LoginPage onLogin={() => setLoggedIn(true)} />}
+    </div>
+  );
 };
 
-export default App;   
+export default App;
